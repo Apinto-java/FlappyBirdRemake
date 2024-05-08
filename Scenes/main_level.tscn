@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3i7mbi1yrwc1"]
+
+[ext_resource type="PackedScene" uid="uid://d2etw6t0p0fwu" path="res://Objects/player.tscn" id="1_df3fg"]
+[ext_resource type="PackedScene" uid="uid://b05sck5v0jgfl" path="res://Scenes/background.tscn" id="1_ta3so"]
+[ext_resource type="Script" path="res://Scenes/MainLevel.cs" id="1_tr5w7"]
+
+[node name="MainLevel" type="Node2D"]
+script = ExtResource("1_tr5w7")
+
+[node name="Background" parent="." instance=ExtResource("1_ta3so")]
+
+[node name="Player" parent="." instance=ExtResource("1_df3fg")]
+position = Vector2(20, 128)
+motion_mode = 1
+Gravity = 100.0
+MaxFallingSpeed = 100.0
+JumpImpulse = -60.0

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2etw6t0p0fwu"]
+
+[ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="1_baatt"]
+[ext_resource type="Script" path="res://Objects/Player.cs" id="1_j7vbi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wbac2"]
+radius = 7.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yh1t"]
+atlas = ExtResource("1_baatt")
+region = Rect2(0, 483.484, 25.5401, 28.5161)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_j7vbi")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wbac2")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_3yh1t")
+
+[node name="ControllerContainer" type="Node" parent="."]
