@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://qxljflohejkj"]
+
+[ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="1_a6kqx"]
+[ext_resource type="Script" path="res://Objects/Ground.cs" id="1_w34bg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3vxu"]
+atlas = ExtResource("1_a6kqx")
+region = Rect2(0, 0, 144, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qgy2"]
+atlas = ExtResource("1_a6kqx")
+region = Rect2(292, 1, 144, 55)
+
+[node name="Ground" type="ParallaxBackground"]
+script = ExtResource("1_w34bg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(72, 128)
+texture = SubResource("AtlasTexture_d3vxu")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(144, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+position = Vector2(72, 232)
+texture = SubResource("AtlasTexture_6qgy2")

@@ -10,12 +10,16 @@ public partial class Player : CharacterBody2D
 
 	private BirdController _controller;
 	private Node _controllerContainer;
+	private AnimatedSprite2D _sprite;
 
 	public override void _Ready()
 	{
 		this.Velocity = new Vector2(0.0f, Gravity);
 
 		_controllerContainer = GetNode<Node>("ControllerContainer");
+
+		_sprite = GetNode<AnimatedSprite2D>("Sprite");
+		_sprite.Play("flying");
 	}
 
 	public override void _PhysicsProcess(double delta)
