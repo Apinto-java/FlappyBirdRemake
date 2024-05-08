@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://qxljflohejkj"]
+[gd_scene load_steps=6 format=3 uid="uid://qxljflohejkj"]
 
 [ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="1_a6kqx"]
-[ext_resource type="Script" path="res://Objects/Ground.cs" id="1_w34bg"]
+[ext_resource type="Script" path="res://Objects/Background.cs" id="1_io4xs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d3vxu"]
 atlas = ExtResource("1_a6kqx")
@@ -11,8 +11,12 @@ region = Rect2(0, 0, 144, 256)
 atlas = ExtResource("1_a6kqx")
 region = Rect2(292, 1, 144, 55)
 
-[node name="Ground" type="ParallaxBackground"]
-script = ExtResource("1_w34bg")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1b7md"]
+size = Vector2(144, 51.5)
+
+[node name="Background" type="ParallaxBackground"]
+script = ExtResource("1_io4xs")
+metadata/_edit_horizontal_guides_ = [200.0, 204.0]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(72, 128)
@@ -24,3 +28,10 @@ motion_mirroring = Vector2(144, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
 position = Vector2(72, 232)
 texture = SubResource("AtlasTexture_6qgy2")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(72, 230.25)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_1b7md")

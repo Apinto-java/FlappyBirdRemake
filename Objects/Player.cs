@@ -10,7 +10,7 @@ public partial class Player : CharacterBody2D
 
 	private BirdController _controller;
 	private Node _controllerContainer;
-	private AnimatedSprite2D _sprite;
+	private AnimatedSprite2D _animatedSprite;
 
 	public override void _Ready()
 	{
@@ -18,8 +18,8 @@ public partial class Player : CharacterBody2D
 
 		_controllerContainer = GetNode<Node>("ControllerContainer");
 
-		_sprite = GetNode<AnimatedSprite2D>("Sprite");
-		_sprite.Play("flying");
+		_animatedSprite = GetNode<AnimatedSprite2D>("Sprite");
+		_animatedSprite.Play("flying");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -28,7 +28,7 @@ public partial class Player : CharacterBody2D
 		Vector2 newVelocity = Velocity;
 		newVelocity.Y = newFallingSpeed;
 		Velocity = newVelocity;
-		GD.Print($"Velocity length: {this.Velocity.Length()}");
+		//GD.Print($"Velocity length: {this.Velocity.Length()}");
 		MoveAndSlide();
 	}
 
