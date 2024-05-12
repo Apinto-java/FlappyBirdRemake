@@ -16,7 +16,7 @@ public partial class Ground : ParallaxBackground
         _globals = GetNode<Globals>("/root/Globals");
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
 		Vector2 newScroll = this.ScrollOffset;
 		newScroll.X -= _globals.ScrollSpeed;
@@ -25,8 +25,9 @@ public partial class Ground : ParallaxBackground
 
     private void OnBodyEntered(Node2D body)
     {
-        GD.Print("Body touched ground");
-        EmitSignal(SignalName.OnPlayerTouchedGound);
+
+        if(body is Player)
+            EmitSignal(SignalName.OnPlayerTouchedGound);
     }
 
 }

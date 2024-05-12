@@ -1,39 +1,46 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3i7mbi1yrwc1"]
+[gd_scene load_steps=9 format=3 uid="uid://b3i7mbi1yrwc1"]
 
 [ext_resource type="Script" path="res://Scenes/MainLevel.cs" id="1_as2ng"]
 [ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="2_d4qob"]
 [ext_resource type="PackedScene" uid="uid://qxljflohejkj" path="res://Objects/Ground.tscn" id="3_iuel1"]
-[ext_resource type="PackedScene" uid="uid://b3pd4nk2bh64" path="res://Objects/LowerPipe.tscn" id="4_8i4db"]
+[ext_resource type="PackedScene" uid="uid://dp5xof45vsdp8" path="res://Objects/Pipes.tscn" id="4_uf3c8"]
 [ext_resource type="PackedScene" uid="uid://d2etw6t0p0fwu" path="res://Objects/Player.tscn" id="5_78g4d"]
-[ext_resource type="PackedScene" uid="uid://bmgwf30t6ikeg" path="res://Objects/UpperPipe.tscn" id="5_ecxwj"]
+[ext_resource type="PackedScene" uid="uid://bond07hoeog5h" path="res://Objects/RestartMarker.tscn" id="6_g0bcq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hh8v1"]
 atlas = ExtResource("2_d4qob")
 region = Rect2(0, 0, 144, 256)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2t6lv"]
+size = Vector2(20, 256)
+
 [node name="MainLevel" type="Node2D"]
 script = ExtResource("1_as2ng")
 
-[node name="Background" type="CanvasLayer" parent="."]
-layer = -100
+[node name="Ground" parent="." instance=ExtResource("3_iuel1")]
+layer = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="Background"]
+[node name="BackgroundImage" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(72, 128)
 texture = SubResource("AtlasTexture_hh8v1")
 
-[node name="Ground" parent="." instance=ExtResource("3_iuel1")]
-layer = -90
+[node name="PipesContainer" type="Node" parent="."]
 
-[node name="PipesLayer" type="CanvasLayer" parent="."]
-layer = -95
+[node name="Pipes" parent="PipesContainer" instance=ExtResource("4_uf3c8")]
+position = Vector2(156, 93)
 
-[node name="LowerPipe" parent="PipesLayer" instance=ExtResource("4_8i4db")]
-position = Vector2(104, 264)
+[node name="RestartArea" type="Area2D" parent="."]
+position = Vector2(157, 113)
+metadata/_edit_group_ = true
 
-[node name="UpperPipe" parent="PipesLayer" instance=ExtResource("5_ecxwj")]
-position = Vector2(104, 80)
+[node name="RestartCollisionShape" type="CollisionShape2D" parent="RestartArea"]
+shape = SubResource("RectangleShape2D_2t6lv")
 
 [node name="Player" parent="." instance=ExtResource("5_78g4d")]
-position = Vector2(20, 128)
+position = Vector2(48, 128)
 motion_mode = 1
 metadata/_edit_group_ = true
+
+[node name="RestartMarker" parent="." instance=ExtResource("6_g0bcq")]
+position = Vector2(212, 126)

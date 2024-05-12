@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bond07hoeog5h"]
+
+[ext_resource type="Script" path="res://Objects/RestartMarker.cs" id="1_2kmfo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_raat6"]
+
+[node name="RestartMarker" type="CharacterBody2D" groups=["restart_marker"]]
+script = ExtResource("1_2kmfo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_raat6")

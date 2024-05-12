@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dp5xof45vsdp8"]
+
+[ext_resource type="PackedScene" uid="uid://b3pd4nk2bh64" path="res://Objects/LowerPipe.tscn" id="1_de5c0"]
+[ext_resource type="Script" path="res://Objects/Pipes.cs" id="1_r15xm"]
+[ext_resource type="PackedScene" uid="uid://bmgwf30t6ikeg" path="res://Objects/UpperPipe.tscn" id="2_sbfv6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u4sgd"]
+size = Vector2(20, 48)
+
+[node name="Pipes" type="Node2D" groups=["pipes"]]
+script = ExtResource("1_r15xm")
+
+[node name="LowerPipe" parent="." instance=ExtResource("1_de5c0")]
+position = Vector2(0, 104)
+
+[node name="UpperPipe" parent="." instance=ExtResource("2_sbfv6")]
+position = Vector2(0, -104)
+
+[node name="ScoreArea" type="Area2D" parent="."]
+
+[node name="ScoreCollisionShape" type="CollisionShape2D" parent="ScoreArea"]
+shape = SubResource("RectangleShape2D_u4sgd")

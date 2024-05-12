@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3pd4nk2bh64"]
+[gd_scene load_steps=5 format=3 uid="uid://b3pd4nk2bh64"]
 
 [ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="1_13udk"]
+[ext_resource type="Script" path="res://Objects/Pipe.cs" id="1_vvkv8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k6ag0"]
 atlas = ExtResource("1_13udk")
@@ -10,8 +11,9 @@ region = Rect2(84, 323, 26, 160)
 size = Vector2(26, 160)
 
 [node name="LowerPipe" type="StaticBody2D"]
+script = ExtResource("1_vvkv8")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_k6ag0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
