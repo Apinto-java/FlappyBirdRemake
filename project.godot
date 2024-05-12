@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Flappy Bird Remake"
-run/main_scene="res://Scenes/main_level.tscn"
+run/main_scene="res://Scenes/MainLevel.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Globals="*res://Scripts/Globals.cs"
 
 [display]
 
