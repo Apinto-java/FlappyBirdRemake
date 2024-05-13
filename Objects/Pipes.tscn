@@ -11,10 +11,10 @@ size = Vector2(20, 48)
 script = ExtResource("1_r15xm")
 
 [node name="LowerPipe" parent="." instance=ExtResource("1_de5c0")]
-position = Vector2(0, 104)
+position = Vector2(0, 80)
 
 [node name="UpperPipe" parent="." instance=ExtResource("2_sbfv6")]
-position = Vector2(0, -104)
+position = Vector2(0, -80)
 
 [node name="ScoreArea" type="Area2D" parent="."]
 

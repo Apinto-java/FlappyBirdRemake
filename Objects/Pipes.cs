@@ -1,8 +1,12 @@
+using System.Drawing;
 using Godot;
 
 public partial class Pipes : Node2D
 {
     private Globals _globals { get; set; }
+    private Pipe UpperPipe { get; set; }
+    private Pipe LowerPipe { get; set; }
+    private CollisionShape2D _scoreAreaCollisionShape { get; set; }
 
     /// <summary>
 	///	Called when the node enters the scene tree for the first time. 
@@ -13,6 +17,9 @@ public partial class Pipes : Node2D
         // The physics process is enabled afterwards
         SetPhysicsProcess(false);
         _globals = GetNode<Globals>("/root/Globals");
+        UpperPipe = GetNode<Pipe>("UpperPipe");
+        LowerPipe = GetNode<Pipe>("LowerPipe");
+        _scoreAreaCollisionShape = GetNode<CollisionShape2D>("ScoreArea/ScoreCollisionShape");
     }
 
     /// <summary>
@@ -25,5 +32,13 @@ public partial class Pipes : Node2D
         var newPosition = this.GlobalPosition;
         newPosition.X -= _globals.ScrollSpeed;
         this.GlobalPosition = newPosition;
+    }
+
+    public void SetGap(float gapInPixels)
+    {
+        UpperPipe.Position = new Vector2(UpperPipe.Position.X, UpperPipe.Position.Y - gapInPixels);
+        LowerPipe.Position = new Vector2(LowerPipe.Position.X, LowerPipe.Position.Y + gapInPixels);
+        var rectShape = _scoreAreaCollisionShape.Shape as RectangleShape2D;
+        rectShape.Size = new Vector2(UpperPipe.GetPipeWidth(), gapInPixels);
     }
 }

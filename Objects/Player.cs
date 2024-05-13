@@ -63,11 +63,10 @@ public partial class Player : CharacterBody2D
 		Vector2 newVelocity = Velocity;
 		newVelocity.Y = newFallingSpeed;
 		Velocity = newVelocity;
-		_animatedSprite.RotationDegrees = GetRotationByVerticalVelocity(Velocity.Y);
+		RotationDegrees = GetRotationByVerticalVelocity(Velocity.Y);
 		MoveAndSlide();
 		for(int i = 0; i < GetSlideCollisionCount(); i++)
 		{
-			GD.Print($"Collision # {i}");
 			var collision = GetSlideCollision(i);
 			if(collision != null && collision.GetCollider() is Pipe)
 			{

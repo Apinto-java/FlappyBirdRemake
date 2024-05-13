@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3i7mbi1yrwc1"]
+[gd_scene load_steps=10 format=3 uid="uid://b3i7mbi1yrwc1"]
 
 [ext_resource type="Script" path="res://Scenes/MainLevel.cs" id="1_as2ng"]
 [ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="2_d4qob"]
 [ext_resource type="PackedScene" uid="uid://qxljflohejkj" path="res://Objects/Ground.tscn" id="3_iuel1"]
 [ext_resource type="PackedScene" uid="uid://dp5xof45vsdp8" path="res://Objects/Pipes.tscn" id="4_uf3c8"]
-[ext_resource type="PackedScene" uid="uid://d2etw6t0p0fwu" path="res://Objects/Player.tscn" id="5_78g4d"]
+[ext_resource type="PackedScene" uid="uid://d2etw6t0p0fwu" path="res://Objects/player.tscn" id="5_78g4d"]
 [ext_resource type="PackedScene" uid="uid://bond07hoeog5h" path="res://Objects/RestartMarker.tscn" id="6_g0bcq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hh8v1"]
@@ -12,10 +12,14 @@ atlas = ExtResource("2_d4qob")
 region = Rect2(0, 0, 144, 256)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t6lv"]
-size = Vector2(20, 256)
+size = Vector2(1, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1to3"]
+size = Vector2(1, 256)
 
 [node name="MainLevel" type="Node2D"]
 script = ExtResource("1_as2ng")
+PipesScene = ExtResource("4_uf3c8")
 
 [node name="Ground" parent="." instance=ExtResource("3_iuel1")]
 layer = 1
@@ -27,20 +31,33 @@ texture = SubResource("AtlasTexture_hh8v1")
 
 [node name="PipesContainer" type="Node" parent="."]
 
-[node name="Pipes" parent="PipesContainer" instance=ExtResource("4_uf3c8")]
-position = Vector2(156, 93)
-
-[node name="RestartArea" type="Area2D" parent="."]
-position = Vector2(157, 113)
-metadata/_edit_group_ = true
-
-[node name="RestartCollisionShape" type="CollisionShape2D" parent="RestartArea"]
-shape = SubResource("RectangleShape2D_2t6lv")
-
 [node name="Player" parent="." instance=ExtResource("5_78g4d")]
 position = Vector2(48, 128)
 motion_mode = 1
 metadata/_edit_group_ = true
 
 [node name="RestartMarker" parent="." instance=ExtResource("6_g0bcq")]
-position = Vector2(212, 126)
+position = Vector2(212, 128)
+collision_layer = 2
+collision_mask = 2
+
+[node name="RestartMarkerPosition" type="Marker2D" parent="."]
+position = Vector2(212, 128)
+
+[node name="Areas" type="Node" parent="."]
+
+[node name="RestartArea" type="Area2D" parent="Areas"]
+position = Vector2(145, 113)
+collision_layer = 2
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="RestartCollisionShape" type="CollisionShape2D" parent="Areas/RestartArea"]
+shape = SubResource("RectangleShape2D_2t6lv")
+
+[node name="DespawnArea" type="Area2D" parent="Areas"]
+position = Vector2(-26, 128)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/DespawnArea"]
+shape = SubResource("RectangleShape2D_s1to3")

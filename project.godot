@@ -21,7 +21,7 @@ Globals="*res://Scripts/Globals.cs"
 
 [display]
 
-window/size/viewport_width=256
+window/size/viewport_width=144
 window/size/viewport_height=256
 window/stretch/mode="canvas_items"
 

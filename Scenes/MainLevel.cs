@@ -7,8 +7,21 @@ public partial class MainLevel : Node2D
 	private Ground _ground { get; set; }
 	private RestartMarker _restartMarker { get; set; }
 	private Area2D _restartArea { get; set; }
+	private Area2D _despawnArea { get; set; }
+	private Node _pipesContainer;
+	private Marker2D _restartMarkerPosition;
+
+	[Export] public PackedScene PipesScene { get; set; }
+
+	private Globals _globals;
 
 	private int _score;
+	private bool _gameOver = false;
+	private bool GameOver 
+	{
+		get => _gameOver;
+		set => _gameOver = value;
+	}
 
 	/// <summary>
 	///	Called when the node enters the scene tree for the first time. 
@@ -16,6 +29,7 @@ public partial class MainLevel : Node2D
 	/// </summary>
 	public override void _Ready()
 	{
+		_globals = GetNode<Globals>("/root/Globals");
 		_score = 0;
 
 		_player = GetNode<Player>("Player");
@@ -24,10 +38,17 @@ public partial class MainLevel : Node2D
 
 		_ground = GetNode<Ground>("Ground");
 		_ground.OnPlayerTouchedGound += () => PlayerTouchedGround();
-
-		_restartArea = GetNode<Area2D>("RestartArea");
-		_restartArea.BodyEntered += (body) => OnPipeEnteredRestartArea(body);
+		
+		_restartMarkerPosition = GetNode<Marker2D>("RestartMarkerPosition");
+		_restartArea = GetNode<Area2D>("Areas/RestartArea");
+		_despawnArea = GetNode<Area2D>("Areas/DespawnArea");
+		_restartArea.BodyEntered += (body) => OnRestartMarkerHit(body);
+		_despawnArea.BodyEntered += (body) => OnDespawnAreaHit(body);
 		_restartMarker = GetNode<RestartMarker>("RestartMarker");
+
+		_pipesContainer = GetNode<Node>("PipesContainer");
+
+		ChangeRestartMarkerPosition();
 	}
 
 	/// <summary>
@@ -38,7 +59,7 @@ public partial class MainLevel : Node2D
 	/// <param name="delta">Time elapsed since the last frame.</param>
 	public override void _Process(double delta)
 	{
-		if(!_player.IsPhysicsProcessing() && Input.IsActionJustPressed("jump"))
+		if(!_player.IsPhysicsProcessing() && Input.IsActionJustPressed("jump") && !GameOver)
 		{
 			_player.SetPhysicsProcess(true);
 			var pipes = GetTree().GetNodesInGroup("pipes");
@@ -74,6 +95,7 @@ public partial class MainLevel : Node2D
 	/// </summary>
 	private void DisablePhysicsProcess()
 	{
+		GameOver = true;
 		_player.SetPhysicsProcess(false);
 		_player.StopAnimation();
 		var pipes = GetTree().GetNodesInGroup("pipes");
@@ -85,12 +107,37 @@ public partial class MainLevel : Node2D
 		_ground.SetPhysicsProcess(false);
 	}
 
-	private void OnPipeEnteredRestartArea(Node2D node)
+	private void OnRestartMarkerHit(Node2D node)
 	{
-		GD.Print("Body entered restart zone");
 		if (node is not RestartMarker)
 			return;
 
-		GD.Print("Restart marker passed");
+		_restartMarker.GlobalPosition = _restartMarkerPosition.GlobalPosition;
+
+		var pipe = PipesScene.Instantiate<Pipes>();
+		var pipePosition = new Vector2(_restartMarker.GlobalPosition.X, GD.RandRange(60, 120));
+		pipe.GlobalPosition = pipePosition;
+		CallDeferred("add_child", pipe);
+		pipe.CallDeferred("set_physics_process", true);
+		pipe.CallDeferred(Pipes.MethodName.SetGap, _globals.InitialGapBetweenPipes);
+	}
+
+	private void OnDespawnAreaHit(Node2D node)
+	{
+		if(node is not Pipes pipe)
+			return;
+
+		pipe.QueueFree();
+	}
+
+	private void ChangeRestartMarkerPosition()
+	{
+		var viewportSize = GetViewportRect().Size;
+		GD.Print($"Viewport width: {viewportSize.X}");
+		_restartMarkerPosition.GlobalPosition = new Vector2(
+				viewportSize.X + _globals.InitialDistanceBetweenPipes, 
+				_restartMarkerPosition.GlobalPosition.Y
+			);
+		_restartMarker.GlobalPosition = _restartMarkerPosition.GlobalPosition;
 	}
 }

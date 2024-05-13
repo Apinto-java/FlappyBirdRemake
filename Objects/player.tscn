@@ -3,8 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="1_baatt"]
 [ext_resource type="Script" path="res://Objects/Player.cs" id="1_j7vbi"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_76p1k"]
-size = Vector2(17, 12)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ftsr0"]
+radius = 6.0
+height = 14.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_na46u"]
 atlas = ExtResource("1_baatt")
@@ -40,7 +41,7 @@ script = ExtResource("1_j7vbi")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 position = Vector2(-2.5, -2)
-shape = SubResource("RectangleShape2D_76p1k")
+shape = SubResource("CapsuleShape2D_ftsr0")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0yfgi")
