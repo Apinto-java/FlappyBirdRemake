@@ -9,3 +9,5 @@ script = ExtResource("1_2kmfo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_raat6")
+
+[node name="ControllerContainer" type="Node" parent="."]

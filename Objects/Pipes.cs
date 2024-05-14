@@ -20,6 +20,8 @@ public partial class Pipes : Node2D
         UpperPipe = GetNode<Pipe>("UpperPipe");
         LowerPipe = GetNode<Pipe>("LowerPipe");
         _scoreAreaCollisionShape = GetNode<CollisionShape2D>("ScoreArea/ScoreCollisionShape");
+
+        SetGap();
     }
 
     /// <summary>
@@ -34,11 +36,12 @@ public partial class Pipes : Node2D
         this.GlobalPosition = newPosition;
     }
 
-    public void SetGap(float gapInPixels)
+    public void SetGap()
     {
-        UpperPipe.Position = new Vector2(UpperPipe.Position.X, UpperPipe.Position.Y - gapInPixels);
-        LowerPipe.Position = new Vector2(LowerPipe.Position.X, LowerPipe.Position.Y + gapInPixels);
+        GD.Print($"Current gap: {_globals.CurrentGapBetweenPipesInPixels}");
+        UpperPipe.Position = new Vector2(UpperPipe.Position.X, UpperPipe.Position.Y - _globals.CurrentGapBetweenPipesInPixels);
+        LowerPipe.Position = new Vector2(LowerPipe.Position.X, LowerPipe.Position.Y + _globals.CurrentGapBetweenPipesInPixels);
         var rectShape = _scoreAreaCollisionShape.Shape as RectangleShape2D;
-        rectShape.Size = new Vector2(UpperPipe.GetPipeWidth(), gapInPixels);
+        rectShape.Size = new Vector2(UpperPipe.GetPipeWidth(), _globals.CurrentGapBetweenPipesInPixels * 2);
     }
 }

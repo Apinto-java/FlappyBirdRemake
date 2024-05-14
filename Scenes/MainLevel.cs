@@ -33,7 +33,6 @@ public partial class MainLevel : Node2D
 		_score = 0;
 
 		_player = GetNode<Player>("Player");
-		_player.SetController(new HumanBirdController(_player));
 		_player.PlayerHitWall += () => PlayerHitWall();
 
 		_ground = GetNode<Ground>("Ground");
@@ -44,6 +43,7 @@ public partial class MainLevel : Node2D
 		_despawnArea = GetNode<Area2D>("Areas/DespawnArea");
 		_restartArea.BodyEntered += (body) => OnRestartMarkerHit(body);
 		_despawnArea.BodyEntered += (body) => OnDespawnAreaHit(body);
+
 		_restartMarker = GetNode<RestartMarker>("RestartMarker");
 
 		_pipesContainer = GetNode<Node>("PipesContainer");
@@ -59,15 +59,15 @@ public partial class MainLevel : Node2D
 	/// <param name="delta">Time elapsed since the last frame.</param>
 	public override void _Process(double delta)
 	{
-		if(!_player.IsPhysicsProcessing() && Input.IsActionJustPressed("jump") && !GameOver)
+		if(Input.IsActionJustPressed("jump") && !GameOver)
 		{
-			_player.SetPhysicsProcess(true);
+			_player.SetController(new HumanBirdController(_player));
 			var pipes = GetTree().GetNodesInGroup("pipes");
 			foreach(var pipe in pipes)
 			{
 				pipe.SetPhysicsProcess(true);
 			}
-			_restartMarker.SetPhysicsProcess(true);
+			_restartMarker.SetController(new PhysicsRestartMarkerController(_restartMarker));
 		}
 	}
 
@@ -96,14 +96,14 @@ public partial class MainLevel : Node2D
 	private void DisablePhysicsProcess()
 	{
 		GameOver = true;
-		_player.SetPhysicsProcess(false);
+		_player.SetController(null);
 		_player.StopAnimation();
 		var pipes = GetTree().GetNodesInGroup("pipes");
 		foreach(var pipe in pipes)
 		{
 			pipe.SetPhysicsProcess(false);
 		}
-		_restartMarker.SetPhysicsProcess(false);
+		_restartMarker.SetController(null);
 		_ground.SetPhysicsProcess(false);
 	}
 
@@ -119,7 +119,6 @@ public partial class MainLevel : Node2D
 		pipe.GlobalPosition = pipePosition;
 		CallDeferred("add_child", pipe);
 		pipe.CallDeferred("set_physics_process", true);
-		pipe.CallDeferred(Pipes.MethodName.SetGap, _globals.InitialGapBetweenPipes);
 	}
 
 	private void OnDespawnAreaHit(Node2D node)
@@ -127,7 +126,7 @@ public partial class MainLevel : Node2D
 		if(node is not Pipes pipe)
 			return;
 
-		pipe.QueueFree();
+		pipe.CallDeferred(Pipes.MethodName.QueueFree);
 	}
 
 	private void ChangeRestartMarkerPosition()

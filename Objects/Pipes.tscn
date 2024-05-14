@@ -20,3 +20,4 @@ position = Vector2(0, -80)
 
 [node name="ScoreCollisionShape" type="CollisionShape2D" parent="ScoreArea"]
 shape = SubResource("RectangleShape2D_u4sgd")
+debug_color = Color(0.901961, 0.211765, 0.564706, 0.419608)
