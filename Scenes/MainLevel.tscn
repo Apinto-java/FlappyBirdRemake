@@ -14,8 +14,8 @@ region = Rect2(0, 0, 144, 256)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t6lv"]
 size = Vector2(1, 256)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1to3"]
-size = Vector2(1, 256)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ivbe"]
+size = Vector2(144, 54)
 
 [node name="MainLevel" type="Node2D"]
 script = ExtResource("1_as2ng")
@@ -55,9 +55,9 @@ metadata/_edit_group_ = true
 [node name="RestartCollisionShape" type="CollisionShape2D" parent="Areas/RestartArea"]
 shape = SubResource("RectangleShape2D_2t6lv")
 
-[node name="DespawnArea" type="Area2D" parent="Areas"]
-position = Vector2(-26, 128)
+[node name="GroundArea" type="Area2D" parent="Areas"]
+position = Vector2(72, 228.5)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/DespawnArea"]
-shape = SubResource("RectangleShape2D_s1to3")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/GroundArea"]
+shape = SubResource("RectangleShape2D_4ivbe")

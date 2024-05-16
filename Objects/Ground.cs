@@ -3,31 +3,32 @@ using System;
 
 public partial class Ground : ParallaxBackground
 {
-
-    private Area2D _groundCollider { get; set; }
     [Signal] public delegate void OnPlayerTouchedGoundEventHandler();
-
-    private Globals _globals;
+    private Node _controllerContainer;
+    public GroundController Controller { get; private set; }
 
     public override void _Ready()
     {
-        _groundCollider = GetNode<Area2D>("Area2D");
-        _groundCollider.BodyEntered += OnBodyEntered;
-        _globals = GetNode<Globals>("/root/Globals");
+        _controllerContainer = GetNode<Node>("ControllerContainer");
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
-		Vector2 newScroll = this.ScrollOffset;
-		newScroll.X -= _globals.ScrollSpeed;
-        this.ScrollOffset = newScroll;
-    }
+    public void SetController(GroundController groundController)
+	{
+		foreach(var child in _controllerContainer.GetChildren())
+		{
+			child.QueueFree();
+		}
 
-    private void OnBodyEntered(Node2D body)
-    {
+		if(groundController == null)
+			return;
 
-        if(body is Player)
-            EmitSignal(SignalName.OnPlayerTouchedGound);
+		Controller = groundController;
+		_controllerContainer.AddChild(Controller);
+	}
+
+    public void Scroll(Vector2 scrollOffset)
+    {
+        this.ScrollOffset = scrollOffset;
     }
 
 }

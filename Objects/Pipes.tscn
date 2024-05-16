@@ -21,3 +21,9 @@ position = Vector2(0, -80)
 [node name="ScoreCollisionShape" type="CollisionShape2D" parent="ScoreArea"]
 shape = SubResource("RectangleShape2D_u4sgd")
 debug_color = Color(0.901961, 0.211765, 0.564706, 0.419608)
+
+[node name="ControllerContainer" type="Node" parent="."]
+
+[node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-2, 0)
+scale = Vector2(3.4, 1)

@@ -7,6 +7,10 @@ public partial class Pipes : Node2D
     private Pipe UpperPipe { get; set; }
     private Pipe LowerPipe { get; set; }
     private CollisionShape2D _scoreAreaCollisionShape { get; set; }
+    private VisibleOnScreenNotifier2D _visibilityNotifier;
+
+    private Node _controllerContainer;
+    public PipeController Controller {get; private set;}
 
     /// <summary>
 	///	Called when the node enters the scene tree for the first time. 
@@ -14,34 +18,49 @@ public partial class Pipes : Node2D
 	/// </summary>
     public override void _Ready()
     {
-        // The physics process is enabled afterwards
-        SetPhysicsProcess(false);
+        _controllerContainer = GetNode<Node>("ControllerContainer");
         _globals = GetNode<Globals>("/root/Globals");
         UpperPipe = GetNode<Pipe>("UpperPipe");
         LowerPipe = GetNode<Pipe>("LowerPipe");
         _scoreAreaCollisionShape = GetNode<CollisionShape2D>("ScoreArea/ScoreCollisionShape");
+        _visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("VisibilityNotifier");
+        _visibilityNotifier.ScreenExited += () => OnPipesExitedScreen();
 
         SetGap();
     }
 
-    /// <summary>
-	/// Called every frame, 'delta' is the time elapsed since the last frame.
-	/// Moves the pipe in the x axis by <c>- Globals.ScrollSpeed </c>
-	/// </summary>
-	/// <param name="delta">Time elapsed since the last frame.</param>
-    public override void _PhysicsProcess(double delta)
+    public void SetController(PipeController pipeController)
     {
-        var newPosition = this.GlobalPosition;
-        newPosition.X -= _globals.ScrollSpeed;
-        this.GlobalPosition = newPosition;
+		foreach(var child in _controllerContainer.GetChildren())
+		{
+			child.QueueFree();
+		}
+
+		if(pipeController == null)
+			return;
+
+		Controller = pipeController;
+		_controllerContainer.AddChild(Controller);
+    }
+
+    public void MoveToPosition(Vector2 position)
+    {
+        this.GlobalPosition = position;
     }
 
     public void SetGap()
     {
         GD.Print($"Current gap: {_globals.CurrentGapBetweenPipesInPixels}");
-        UpperPipe.Position = new Vector2(UpperPipe.Position.X, UpperPipe.Position.Y - _globals.CurrentGapBetweenPipesInPixels);
-        LowerPipe.Position = new Vector2(LowerPipe.Position.X, LowerPipe.Position.Y + _globals.CurrentGapBetweenPipesInPixels);
+        UpperPipe.GlobalPosition = new Vector2(UpperPipe.GlobalPosition.X, UpperPipe.GlobalPosition.Y - _globals.CurrentGapBetweenPipesInPixels);
+        LowerPipe.GlobalPosition = new Vector2(LowerPipe.GlobalPosition.X, LowerPipe.GlobalPosition.Y + _globals.CurrentGapBetweenPipesInPixels);
         var rectShape = _scoreAreaCollisionShape.Shape as RectangleShape2D;
         rectShape.Size = new Vector2(UpperPipe.GetPipeWidth(), _globals.CurrentGapBetweenPipesInPixels * 2);
+    }
+
+    private void OnPipesExitedScreen()
+    {
+        GD.Print("Pipes exited screen");
+        this.SetController(null);
+        this.QueueFree();
     }
 }

@@ -2,7 +2,7 @@ using Godot;
 
 public partial class Player : CharacterBody2D
 {
-	private BirdController _controller;
+	public BirdController Controller { get; private set; }
 	private Node _controllerContainer;
 	private AnimatedSprite2D _animatedSprite;
 
@@ -58,7 +58,7 @@ public partial class Player : CharacterBody2D
 		if(birdController == null)
 			return;
 
-		_controller = birdController;
-		_controllerContainer.AddChild(_controller);
+		Controller = birdController;
+		_controllerContainer.AddChild(Controller);
 	}
 }

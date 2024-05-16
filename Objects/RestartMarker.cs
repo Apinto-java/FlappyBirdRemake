@@ -10,7 +10,6 @@ public partial class RestartMarker : CharacterBody2D
 	public override void _Ready()
 	{
 		_controllerContainer = GetNode<Node>("ControllerContainer");
-		SetPhysicsProcess(false);
 	}
 
 	public void SetController(RestartMarkerController restartMarkerController)

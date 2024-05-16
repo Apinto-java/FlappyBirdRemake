@@ -7,7 +7,7 @@ public partial class MainLevel : Node2D
 	private Ground _ground { get; set; }
 	private RestartMarker _restartMarker { get; set; }
 	private Area2D _restartArea { get; set; }
-	private Area2D _despawnArea { get; set; }
+	private Area2D _groundArea;
 	private Node _pipesContainer;
 	private Marker2D _restartMarkerPosition;
 
@@ -33,16 +33,17 @@ public partial class MainLevel : Node2D
 		_score = 0;
 
 		_player = GetNode<Player>("Player");
+		_player.SetController(new HumanBirdController(_player));
 		_player.PlayerHitWall += () => PlayerHitWall();
 
 		_ground = GetNode<Ground>("Ground");
-		_ground.OnPlayerTouchedGound += () => PlayerTouchedGround();
+		_ground.SetController(new PhysicsGroundController(_ground));
+		_groundArea = GetNode<Area2D>("Areas/GroundArea");
+		_groundArea.BodyEntered += (body) => PlayerTouchedGround(body);
 		
 		_restartMarkerPosition = GetNode<Marker2D>("RestartMarkerPosition");
 		_restartArea = GetNode<Area2D>("Areas/RestartArea");
-		_despawnArea = GetNode<Area2D>("Areas/DespawnArea");
 		_restartArea.BodyEntered += (body) => OnRestartMarkerHit(body);
-		_despawnArea.BodyEntered += (body) => OnDespawnAreaHit(body);
 
 		_restartMarker = GetNode<RestartMarker>("RestartMarker");
 
@@ -51,17 +52,20 @@ public partial class MainLevel : Node2D
 		ChangeRestartMarkerPosition();
 	}
 
-	/// <summary>
-	/// Called every frame, 'delta' is the time elapsed since the last frame.
-	/// Checks whether the jump input has been pressed, if that's the case, the physics process
-	/// for the player and for the pipes is enabled.
-	/// </summary>
-	/// <param name="delta">Time elapsed since the last frame.</param>
-	public override void _Process(double delta)
+    /// <summary>
+    /// Called every frame, 'delta' is the time elapsed since the last frame.
+    /// Checks whether the jump input has been pressed, if that's the case, the physics process
+    /// for the player and for the pipes is enabled.
+    /// </summary>
+    /// <param name="delta">Time elapsed since the last frame.</param>
+    public override void _Process(double delta)
 	{
+		if(Input.IsActionJustPressed("restart"))
+			GetTree().ReloadCurrentScene();
+
 		if(Input.IsActionJustPressed("jump") && !GameOver)
 		{
-			_player.SetController(new HumanBirdController(_player));
+			// _player.SetController(new HumanBirdController(_player));
 			var pipes = GetTree().GetNodesInGroup("pipes");
 			foreach(var pipe in pipes)
 			{
@@ -75,8 +79,11 @@ public partial class MainLevel : Node2D
 	/// Executed when the player touched the ground.
 	/// It stops physics processing for the Player, the Pipes and the Ground.
 	/// </summary>
-    private void PlayerTouchedGround()
+    private void PlayerTouchedGround(Node2D body)
 	{
+		if(body is not Player)
+			return;
+
 		DisablePhysicsProcess();
 	}
 
@@ -101,14 +108,18 @@ public partial class MainLevel : Node2D
 		var pipes = GetTree().GetNodesInGroup("pipes");
 		foreach(var pipe in pipes)
 		{
-			pipe.SetPhysicsProcess(false);
+			if(pipe is not Pipes pipeObj)
+				continue;
+
+			pipeObj.SetController(null);
 		}
 		_restartMarker.SetController(null);
-		_ground.SetPhysicsProcess(false);
+		_ground.SetController(null);
 	}
 
 	private void OnRestartMarkerHit(Node2D node)
 	{
+		GD.Print($"Node {node} collided with restart area");
 		if (node is not RestartMarker)
 			return;
 
@@ -117,22 +128,13 @@ public partial class MainLevel : Node2D
 		var pipe = PipesScene.Instantiate<Pipes>();
 		var pipePosition = new Vector2(_restartMarker.GlobalPosition.X, GD.RandRange(60, 120));
 		pipe.GlobalPosition = pipePosition;
-		CallDeferred("add_child", pipe);
-		pipe.CallDeferred("set_physics_process", true);
-	}
-
-	private void OnDespawnAreaHit(Node2D node)
-	{
-		if(node is not Pipes pipe)
-			return;
-
-		pipe.CallDeferred(Pipes.MethodName.QueueFree);
+		CallDeferred(MainLevel.MethodName.AddChild, pipe);
+		pipe.CallDeferred(Pipes.MethodName.SetController, new PhysicsPipeController(pipe));
 	}
 
 	private void ChangeRestartMarkerPosition()
 	{
 		var viewportSize = GetViewportRect().Size;
-		GD.Print($"Viewport width: {viewportSize.X}");
 		_restartMarkerPosition.GlobalPosition = new Vector2(
 				viewportSize.X + _globals.InitialDistanceBetweenPipes, 
 				_restartMarkerPosition.GlobalPosition.Y
