@@ -1,0 +1,469 @@
+[gd_scene load_steps=18 format=3 uid="uid://clm568cbwg8jt"]
+
+[ext_resource type="Script" path="res://Objects/HUD.cs" id="1_8a5qh"]
+[ext_resource type="Theme" uid="uid://c7xnw3rubfs3h" path="res://Themes/main_theme.tres" id="1_is0aw"]
+[ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="3_w64yr"]
+[ext_resource type="Texture2D" uid="uid://sxqjiywt6g3s" path="res://Art/new_best_score.tres" id="4_608m0"]
+
+[sub_resource type="Animation" id="Animation_eyi61"]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeathFlash:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DeathFlash:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GameOverContainer/GameOverLabel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 112.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GameOverContainer/GameOverLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GameOverContainer/GameOverLabel:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tryx4"]
+resource_name = "death_animation"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeathFlash:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DeathFlash:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.537255), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8jlku"]
+_data = {
+"RESET": SubResource("Animation_eyi61"),
+"death_animation": SubResource("Animation_tryx4")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nn1i6"]
+atlas = ExtResource("3_w64yr")
+region = Rect2(291, 90, 59, 51)
+
+[sub_resource type="Animation" id="Animation_o0u5u"]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ma2yj"]
+resource_name = "fade_out"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kn6ie"]
+_data = {
+"RESET": SubResource("Animation_o0u5u"),
+"fade_out": SubResource("Animation_ma2yj")
+}
+
+[sub_resource type="Animation" id="Animation_nkhka"]
+resource_name = "game_over_animation"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.101961), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n4r13"]
+_data = {
+"game_over_animation": SubResource("Animation_nkhka")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cy0ti"]
+atlas = ExtResource("3_w64yr")
+region = Rect2(3, 259, 113, 57)
+
+[sub_resource type="Animation" id="Animation_bd3x2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15.5, 54.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CurrentScoreLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BestScoreLabel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_5052g"]
+resource_name = "slide_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(15.5, 232.5), Vector2(15.5, 54.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CurrentScoreLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BestScoreLabel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p8ojb"]
+_data = {
+"RESET": SubResource("Animation_bd3x2"),
+"slide_in": SubResource("Animation_5052g")
+}
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_8a5qh")
+MainMenuScenePath = "res://Scenes/MainMenu.tscn"
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 13.0
+grow_horizontal = 2
+theme = ExtResource("1_is0aw")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeathFlash" type="ColorRect" parent="."]
+visible = false
+offset_right = 144.0
+offset_bottom = 256.0
+
+[node name="SplashAnimationPlayer" type="AnimationPlayer" parent="DeathFlash"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_8jlku")
+}
+
+[node name="GetReadyContainer" type="MarginContainer" parent="."]
+offset_top = 41.0
+offset_right = 144.0
+offset_bottom = 187.0
+theme = ExtResource("1_is0aw")
+
+[node name="GetReadyLabel" type="Label" parent="GetReadyContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("1_is0aw")
+theme_override_colors/font_color = Color(0.878431, 0.380392, 0.0980392, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/font_size = 40
+text = "GET READY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="GetReadyContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = SubResource("AtlasTexture_nn1i6")
+
+[node name="GetReadyAnimationPlayer" type="AnimationPlayer" parent="GetReadyContainer"]
+libraries = {
+"": SubResource("AnimationLibrary_kn6ie")
+}
+
+[node name="GameOverContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 40.0
+offset_right = 144.0
+offset_bottom = 218.0
+
+[node name="GameOverLabel" type="Label" parent="GameOverContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_top = 112.5
+offset_right = 72.0
+offset_bottom = 144.5
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_is0aw")
+theme_override_colors/font_color = Color(0.980392, 0.709804, 0.133333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/font_size = 40
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="GameOverAnimationPlayer" type="AnimationPlayer" parent="GameOverContainer/GameOverLabel"]
+libraries = {
+"": SubResource("AnimationLibrary_n4r13")
+}
+
+[node name="GameOverScore" type="TextureRect" parent="GameOverContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -34.5
+offset_right = 56.5
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_cy0ti")
+
+[node name="GameOverScoreAnimationPlayer" type="AnimationPlayer" parent="GameOverContainer/GameOverScore"]
+libraries = {
+"": SubResource("AnimationLibrary_p8ojb")
+}
+
+[node name="CurrentScoreLabel" type="Label" parent="GameOverContainer/GameOverScore"]
+layout_mode = 0
+offset_left = 78.5
+offset_top = 15.5
+offset_right = 105.5
+offset_bottom = 28.5
+theme = ExtResource("1_is0aw")
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="BestScoreLabel" type="Label" parent="GameOverContainer/GameOverScore"]
+layout_mode = 0
+offset_left = 78.5
+offset_top = 35.5
+offset_right = 105.5
+offset_bottom = 48.5
+theme = ExtResource("1_is0aw")
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="MedalImage" type="TextureRect" parent="GameOverContainer/GameOverScore"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 21.0
+offset_right = 36.0
+offset_bottom = 45.0
+
+[node name="NewBestScoreImage" type="TextureRect" parent="GameOverContainer/GameOverScore"]
+layout_mode = 0
+offset_left = 66.5
+offset_top = 28.5
+offset_right = 82.5
+offset_bottom = 35.5
+texture = ExtResource("4_608m0")
+
+[node name="GameOverOkButton" type="Button" parent="GameOverContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_is0aw")
+text = "OK"

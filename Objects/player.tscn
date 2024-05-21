@@ -1,40 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2etw6t0p0fwu"]
+[gd_scene load_steps=4 format=3 uid="uid://d2etw6t0p0fwu"]
 
-[ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="1_baatt"]
 [ext_resource type="Script" path="res://Objects/Player.cs" id="1_j7vbi"]
+[ext_resource type="SpriteFrames" uid="uid://gggtm382pqok" path="res://Art/bird_flying_animation.tres" id="2_1aqm6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ftsr0"]
 radius = 6.0
 height = 14.0
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_na46u"]
-atlas = ExtResource("1_baatt")
-region = Rect2(0, 486, 28, 26)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eball"]
-atlas = ExtResource("1_baatt")
-region = Rect2(28, 486, 28, 26)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i32r4"]
-atlas = ExtResource("1_baatt")
-region = Rect2(56, 486, 28, 26)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_0yfgi"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_na46u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eball")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i32r4")
-}],
-"loop": true,
-"name": &"flying",
-"speed": 5.0
-}]
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_j7vbi")
@@ -44,7 +15,7 @@ position = Vector2(-2.5, -2)
 shape = SubResource("CapsuleShape2D_ftsr0")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_0yfgi")
+sprite_frames = ExtResource("2_1aqm6")
 animation = &"flying"
 
 [node name="ControllerContainer" type="Node" parent="."]

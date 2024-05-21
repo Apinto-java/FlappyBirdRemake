@@ -1,0 +1,105 @@
+[gd_scene load_steps=9 format=3 uid="uid://trpnh728lof5"]
+
+[ext_resource type="PackedScene" uid="uid://b0lev2473uq0h" path="res://Objects/Background.tscn" id="1_gr1os"]
+[ext_resource type="Script" path="res://Scenes/MainMenu.cs" id="1_yt2jt"]
+[ext_resource type="PackedScene" uid="uid://qxljflohejkj" path="res://Objects/Ground.tscn" id="2_po51r"]
+[ext_resource type="Theme" uid="uid://c7xnw3rubfs3h" path="res://Themes/main_theme.tres" id="4_xmhqy"]
+[ext_resource type="SpriteFrames" uid="uid://gggtm382pqok" path="res://Art/bird_flying_animation.tres" id="5_c87bi"]
+
+[sub_resource type="Animation" id="Animation_yus0v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 58)]
+}
+
+[sub_resource type="Animation" id="Animation_2smcn"]
+resource_name = "title_animation"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(10, 58), Vector2(10, 63), Vector2(10, 58)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t5qg2"]
+_data = {
+"RESET": SubResource("Animation_yus0v"),
+"title_animation": SubResource("Animation_2smcn")
+}
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_yt2jt")
+MainLevelScenePath = "res://Scenes/MainLevel.tscn"
+
+[node name="BackgroundImage" parent="." instance=ExtResource("1_gr1os")]
+
+[node name="Ground" parent="." instance=ExtResource("2_po51r")]
+layer = 1
+
+[node name="TitleContainer" type="HBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = 58.0
+offset_right = 117.0
+offset_bottom = 98.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="TitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_xmhqy")
+theme_override_colors/font_color = Color(0.619608, 0.917647, 0.345098, 1)
+theme_override_colors/font_outline_color = Color(0.917647, 0.992157, 0.858824, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 30
+text = "Flappy Bird"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bird" type="AnimatedSprite2D" parent="TitleContainer"]
+position = Vector2(122, 22)
+sprite_frames = ExtResource("5_c87bi")
+animation = &"flying"
+frame_progress = 0.81406
+
+[node name="TitleAnimationPlayer" type="AnimationPlayer" parent="TitleContainer"]
+libraries = {
+"": SubResource("AnimationLibrary_t5qg2")
+}
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -56.0
+offset_right = 4.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme = ExtResource("4_xmhqy")
+text = "START"

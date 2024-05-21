@@ -1,15 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3i7mbi1yrwc1"]
+[gd_scene load_steps=11 format=3 uid="uid://b3i7mbi1yrwc1"]
 
 [ext_resource type="Script" path="res://Scenes/MainLevel.cs" id="1_as2ng"]
-[ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="2_d4qob"]
 [ext_resource type="PackedScene" uid="uid://qxljflohejkj" path="res://Objects/Ground.tscn" id="3_iuel1"]
 [ext_resource type="PackedScene" uid="uid://dp5xof45vsdp8" path="res://Objects/Pipes.tscn" id="4_uf3c8"]
 [ext_resource type="PackedScene" uid="uid://d2etw6t0p0fwu" path="res://Objects/player.tscn" id="5_78g4d"]
+[ext_resource type="PackedScene" uid="uid://b0lev2473uq0h" path="res://Objects/Background.tscn" id="5_okon2"]
 [ext_resource type="PackedScene" uid="uid://bond07hoeog5h" path="res://Objects/RestartMarker.tscn" id="6_g0bcq"]
+[ext_resource type="PackedScene" uid="uid://clm568cbwg8jt" path="res://Objects/HUD.tscn" id="7_0tg3r"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hh8v1"]
-atlas = ExtResource("2_d4qob")
-region = Rect2(0, 0, 144, 256)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s801c"]
+size = Vector2(144, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t6lv"]
 size = Vector2(1, 256)
@@ -24,12 +24,7 @@ PipesScene = ExtResource("4_uf3c8")
 [node name="Ground" parent="." instance=ExtResource("3_iuel1")]
 layer = 1
 
-[node name="BackgroundImage" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(72, 128)
-texture = SubResource("AtlasTexture_hh8v1")
-
-[node name="PipesContainer" type="Node" parent="."]
+[node name="BackgroundImage" parent="." instance=ExtResource("5_okon2")]
 
 [node name="Player" parent="." instance=ExtResource("5_78g4d")]
 position = Vector2(48, 128)
@@ -44,6 +39,14 @@ collision_mask = 2
 [node name="RestartMarkerPosition" type="Marker2D" parent="."]
 position = Vector2(212, 128)
 
+[node name="GroundStaticBody" type="StaticBody2D" parent="."]
+position = Vector2(72, 246)
+collision_layer = 2
+collision_mask = 2
+
+[node name="GroundCollisionShape" type="CollisionShape2D" parent="GroundStaticBody"]
+shape = SubResource("RectangleShape2D_s801c")
+
 [node name="Areas" type="Node" parent="."]
 
 [node name="RestartArea" type="Area2D" parent="Areas"]
@@ -56,8 +59,10 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_2t6lv")
 
 [node name="GroundArea" type="Area2D" parent="Areas"]
-position = Vector2(72, 228.5)
+position = Vector2(72, 246)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/GroundArea"]
 shape = SubResource("RectangleShape2D_4ivbe")
+
+[node name="HUD" parent="." instance=ExtResource("7_0tg3r")]

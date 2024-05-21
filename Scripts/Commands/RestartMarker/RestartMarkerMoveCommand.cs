@@ -1,20 +1,24 @@
 using System;
+using FlappyBirdRemake.Objects;
 using Godot;
 
-public partial class RestartMarkerMoveCommand : RestartMarkerCommand
+namespace FlappyBirdRemake.Commands.RestartMarkerCommands
 {
-    public override void Execute(RestartMarker marker, GodotObject data)
+    public partial class RestartMarkerMoveCommand : RestartMarkerCommand
     {
-        ArgumentNullException.ThrowIfNull(marker);
+        public override void Execute(RestartMarker marker, GodotObject data)
+        {
+            ArgumentNullException.ThrowIfNull(marker);
 
-        if(data is not RestartMarkerMoveCommandParams param)
-            return;
+            if(data is not RestartMarkerMoveCommandParams param)
+                return;
 
-        marker.Move(param.Position);
+            marker.Move(param.Position);
+        }
     }
-}
 
-public partial class RestartMarkerMoveCommandParams : GodotObject
-{
-    public Vector2 Position { get; set; }   
+    public partial class RestartMarkerMoveCommandParams : GodotObject
+    {
+        public Vector2 Position { get; set; }   
+    }
 }

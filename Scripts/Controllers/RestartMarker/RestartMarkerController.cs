@@ -1,12 +1,23 @@
+using FlappyBirdRemake.Commands.RestartMarkerCommands;
+using FlappyBirdRemake.Objects;
 using Godot;
 
-public partial class RestartMarkerController : Node
+namespace FlappyBirdRemake.Controllers.RestartMarkerControllers
 {
-    public RestartMarker RestartMarker { get; set; }
-    public RestartMarkerMoveCommand MoveCommand { get; set; } = new();
-
-    public RestartMarkerController(RestartMarker restartMarker)
+    public partial class RestartMarkerController : Node
     {
-        RestartMarker = restartMarker;
+        public RestartMarker RestartMarker { get; set; }
+        public RestartMarkerMoveCommand MoveCommand { get; set; } = new();
+
+        public RestartMarkerController(RestartMarker restartMarker)
+        {
+            RestartMarker = restartMarker;
+        }
+
+        public override void _ExitTree()
+        {
+            MoveCommand.Dispose();
+            Dispose();
+        }
     }
 }

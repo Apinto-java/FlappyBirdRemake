@@ -1,12 +1,23 @@
+using FlappyBirdRemake.Commands.GroundCommands;
+using FlappyBirdRemake.Objects;
 using Godot;
 
-public partial class GroundController : Node
+namespace FlappyBirdRemake.Controllers.GroundControllers
 {
-    public Ground Ground { get; set; }
-    public GroundScrollCommand ScrollCommand { get; set; } = new();
-
-    public GroundController(Ground ground)
+    public partial class GroundController : Node
     {
-        Ground = ground;
+        public Ground Ground { get; set; }
+        public GroundScrollCommand ScrollCommand { get; set; } = new();
+
+        public GroundController(Ground ground)
+        {
+            Ground = ground;
+        }
+
+        public override void _ExitTree()
+        {
+            ScrollCommand.Dispose();
+            Dispose();
+        }
     }
 }

@@ -1,6 +1,10 @@
+using FlappyBirdRemake.Objects;
 using Godot;
 
-public abstract partial class PipeCommand : GodotObject
+namespace FlappyBirdRemake.Commands.PipesCommands
 {
-    public abstract void Execute(Pipes pipes, GodotObject data);
+    public abstract partial class PipeCommand : GodotObject
+    {
+        public abstract void Execute(Pipes pipes, GodotObject data);
+    }
 }

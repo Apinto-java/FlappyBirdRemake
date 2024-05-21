@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://gggtm382pqok"]
+
+[ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="1_lcqo0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_na46u"]
+atlas = ExtResource("1_lcqo0")
+region = Rect2(0, 486, 28, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eball"]
+atlas = ExtResource("1_lcqo0")
+region = Rect2(28, 486, 28, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i32r4"]
+atlas = ExtResource("1_lcqo0")
+region = Rect2(56, 486, 28, 26)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_na46u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eball")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i32r4")
+}],
+"loop": true,
+"name": &"flying",
+"speed": 5.0
+}]

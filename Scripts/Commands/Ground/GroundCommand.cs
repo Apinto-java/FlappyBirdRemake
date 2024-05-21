@@ -1,6 +1,10 @@
+using FlappyBirdRemake.Objects;
 using Godot;
 
-public abstract partial class GroundCommand : GodotObject 
+namespace FlappyBirdRemake.Commands.GroundCommands
 {
-    public abstract void Execute(Ground ground, GodotObject data);
+    public abstract partial class GroundCommand : GodotObject 
+    {
+        public abstract void Execute(Ground ground, GodotObject data);
+    }
 }

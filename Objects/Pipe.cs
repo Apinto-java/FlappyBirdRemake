@@ -1,16 +1,24 @@
 using Godot;
 
-public partial class Pipe : StaticBody2D
+namespace FlappyBirdRemake.Objects
 {
-    private Sprite2D Sprite { get; set; }
-
-    public override void _Ready()
+    public partial class Pipe : StaticBody2D
     {
-        Sprite = GetNode<Sprite2D>("Sprite");
-    }
+        private Sprite2D Sprite { get; set; }
 
-    public int GetPipeWidth() 
-    {
-        return Sprite.Texture.GetWidth();
+        public override void _Ready()
+        {
+            Sprite = GetNode<Sprite2D>("Sprite");
+        }
+
+        public int GetPipeWidth() 
+        {
+            return Sprite.Texture.GetWidth();
+        }
+
+        public override void _ExitTree()
+        {
+            Dispose();
+        }
     }
 }

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://r6rkmx3f0csb"]
+
+[ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="1_6qggc"]
+
+[resource]
+atlas = ExtResource("1_6qggc")
+region = Rect2(121, 282, 22, 22)

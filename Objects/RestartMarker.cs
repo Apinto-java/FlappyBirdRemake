@@ -1,37 +1,46 @@
+using FlappyBirdRemake.Controllers.RestartMarkerControllers;
 using Godot;
 using System;
 
-public partial class RestartMarker : CharacterBody2D
+namespace FlappyBirdRemake.Objects
 {
-	private Node _controllerContainer;
-	public RestartMarkerController Controller { get; private set; }
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public partial class RestartMarker : CharacterBody2D
 	{
-		_controllerContainer = GetNode<Node>("ControllerContainer");
-	}
+		private Node _controllerContainer;
+		public RestartMarkerController Controller { get; private set; }
 
-	public void SetController(RestartMarkerController restartMarkerController)
-	{
-		foreach(var child in _controllerContainer.GetChildren())
+		// Called when the node enters the scene tree for the first time.
+		public override void _Ready()
 		{
-			child.QueueFree();
+			_controllerContainer = GetNode<Node>("ControllerContainer");
 		}
 
-		if(restartMarkerController == null)
-			return;
-			
-		Controller = restartMarkerController;
-		_controllerContainer.AddChild(Controller);
-	}
+		public void SetController(RestartMarkerController restartMarkerController)
+		{
+			foreach(var child in _controllerContainer.GetChildren())
+			{
+				child.QueueFree();
+			}
 
-	/// <summary>
-	/// Moves this Restart Marker to the specified position
-	/// </summary>
-	/// <param name="position"><c>Vector2</c> representing the new position of the RestartMarker</param>
-	public void Move(Vector2 position)
-	{
-		this.GlobalPosition = position;
+			if(restartMarkerController == null)
+				return;
+				
+			Controller = restartMarkerController;
+			_controllerContainer.AddChild(Controller);
+		}
+
+		/// <summary>
+		/// Moves this Restart Marker to the specified position
+		/// </summary>
+		/// <param name="position"><c>Vector2</c> representing the new position of the RestartMarker</param>
+		public void Move(Vector2 position)
+		{
+			this.GlobalPosition = position;
+		}
+
+		public override void _ExitTree()
+		{
+			Dispose();
+		}
 	}
 }

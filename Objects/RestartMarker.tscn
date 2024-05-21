@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Objects/RestartMarker.cs" id="1_2kmfo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_raat6"]
+size = Vector2(1, 20)
 
 [node name="RestartMarker" type="CharacterBody2D" groups=["restart_marker"]]
 script = ExtResource("1_2kmfo")

@@ -15,7 +15,7 @@ metadata/_edit_horizontal_guides_ = [200.0, 204.0]
 motion_mirroring = Vector2(144, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
-position = Vector2(72, 228.5)
+position = Vector2(72, 246)
 texture = SubResource("AtlasTexture_6qgy2")
 
 [node name="ControllerContainer" type="Node" parent="."]

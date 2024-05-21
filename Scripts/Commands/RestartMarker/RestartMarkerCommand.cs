@@ -1,6 +1,10 @@
+using FlappyBirdRemake.Objects;
 using Godot;
 
-public abstract partial class RestartMarkerCommand : GodotObject
+namespace FlappyBirdRemake.Commands.RestartMarkerCommands
 {
-    public abstract void Execute(RestartMarker marker, GodotObject data);
+    public abstract partial class RestartMarkerCommand : GodotObject
+    {
+        public abstract void Execute(RestartMarker marker, GodotObject data);
+    }
 }

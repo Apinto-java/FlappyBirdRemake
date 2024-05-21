@@ -1,17 +1,21 @@
+using FlappyBirdRemake.Objects;
 using Godot;
 
-public partial class BirdJumpCommand : BirdCommand
+namespace FlappyBirdRemake.Commands.PlayerCommands
 {
-    public override void Execute(Player player, GodotObject data)
+    public partial class BirdJumpCommand : BirdCommand
     {
-        if(data is not BirdJumpParams jumpParams)
-            return;
+        public override void Execute(Player player, GodotObject data)
+        {
+            if(data is not BirdJumpParams jumpParams)
+                return;
 
-        player.Jump(jumpParams.Impulse);
+            player.Jump(jumpParams.Impulse);
+        }
     }
-}
 
-public partial class BirdJumpParams : GodotObject
-{
-    public float Impulse { get; set; }
+    public partial class BirdJumpParams : GodotObject
+    {
+        public float Impulse { get; set; }
+    }
 }

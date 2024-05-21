@@ -1,22 +1,29 @@
+using FlappyBirdRemake.Commands.PipesCommands;
+using FlappyBirdRemake.Objects;
 using Godot;
 
-public partial class PhysicsPipeController : PipeController
+namespace FlappyBirdRemake.Controllers.PipesControllers
 {
-    private Globals _globals;
-
-    public PhysicsPipeController(Pipes pipes) : base(pipes)
+    public partial class PhysicsPipeController : PipeController
     {
-    }
+        private float _scrollSpeed;
+        private PipeScrollParams _scrollParams = new();
 
-    public override void _Ready()
-    {
-        _globals = GetNode<Globals>("/root/Globals");
-    }
+        public PhysicsPipeController(Pipes pipes) : base(pipes)
+        {
+        }
 
-    public override void _PhysicsProcess(double delta)
-    {
-        var newPosition = Pipes.GlobalPosition;
-        newPosition.X -= _globals.ScrollSpeed;
-        ScrollCommand.Execute(Pipes, new PipeScrollParams { Position = newPosition});
+        public override void _Ready()
+        {
+            _scrollSpeed = GetNode<Globals>("/root/Globals").ScrollSpeed;
+        }
+
+        public override void _PhysicsProcess(double delta)
+        {
+            var newPosition = Pipes.GlobalPosition;
+            newPosition.X -= _scrollSpeed;
+            _scrollParams.Position = newPosition;
+            ScrollCommand.Execute(Pipes, _scrollParams);
+        }
     }
 }

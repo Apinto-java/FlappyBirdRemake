@@ -1,20 +1,24 @@
+using FlappyBirdRemake.Objects;
 using Godot;
 using System;
 
-public partial class GroundScrollCommand : GroundCommand
+namespace FlappyBirdRemake.Commands.GroundCommands
 {
-    public override void Execute(Ground ground, GodotObject data)
+    public partial class GroundScrollCommand : GroundCommand
     {
-        ArgumentNullException.ThrowIfNull(ground);
+        public override void Execute(Ground ground, GodotObject data)
+        {
+            ArgumentNullException.ThrowIfNull(ground);
 
-        if(data is not GroundScrollParams scrollParams)
-            return;
+            if(data is not GroundScrollParams scrollParams)
+                return;
 
-        ground.Scroll(scrollParams.ScrollOffset);
+            ground.Scroll(scrollParams.ScrollOffset);
+        }
     }
-}
 
-public partial class GroundScrollParams : GodotObject 
-{
-    public Vector2 ScrollOffset { get; set; }
+    public partial class GroundScrollParams : GodotObject 
+    {
+        public Vector2 ScrollOffset { get; set; }
+    }
 }

@@ -1,20 +1,24 @@
+using FlappyBirdRemake.Objects;
 using Godot;
 using System;
 
-public partial class BirdRotateCommand : BirdCommand
+namespace FlappyBirdRemake.Commands.PlayerCommands
 {
-    public override void Execute(Player player, GodotObject data)
+    public partial class BirdRotateCommand : BirdCommand
     {
-        ArgumentNullException.ThrowIfNull(player);
+        public override void Execute(Player player, GodotObject data)
+        {
+            ArgumentNullException.ThrowIfNull(player);
 
-        if(data is not BirdRotateParams rotateParams)
-            return;
+            if(data is not BirdRotateParams rotateParams)
+                return;
 
-        player.SetRotation(rotateParams.RotationDegrees);
+            player.SetRotation(rotateParams.RotationDegrees);
+        }
     }
-}
 
-public partial class BirdRotateParams : GodotObject
-{
-    public float RotationDegrees { get; set; }
+    public partial class BirdRotateParams : GodotObject
+    {
+        public float RotationDegrees { get; set; }
+    }
 }
