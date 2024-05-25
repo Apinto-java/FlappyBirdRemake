@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgp2aq1wp50s3"]
+
+[ext_resource type="Script" path="res://Objects/AudioPlayer.cs" id="1_qqiur"]
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_8sqtg"]
+polyphony = 3
+
+[node name="AudioPlayer" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamPolyphonic_8sqtg")
+max_polyphony = 3
+script = ExtResource("1_qqiur")

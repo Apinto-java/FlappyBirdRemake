@@ -6,6 +6,7 @@ using FlappyBirdRemake.Controllers.PipesControllers;
 using FlappyBirdRemake.Controllers.PlayerControllers;
 using FlappyBirdRemake.Controllers.RestartMarkerControllers;
 using FlappyBirdRemake.Objects;
+using FlappyBirdRemake.Objects.Sound;
 using FlappyBirdRemake.Objects.UI;
 using FlappyBirdRemake.Utils;
 using Godot;
@@ -47,6 +48,8 @@ namespace FlappyBirdRemake.Scenes
 
 		private readonly ScoreFileManager _scoreFileManager = new();
 
+		private AudioPlayer _audioPlayer;
+
 		/// <summary>
 		///	Called when the node enters the scene tree for the first time. 
 		///	Initializes all necessary variables.
@@ -59,6 +62,7 @@ namespace FlappyBirdRemake.Scenes
 
 			_player = GetNode<Player>("Player");
 			_player.PlayerHitWall += () => PlayerHitWall();
+			_player.PlayerJump += PlayerJumped;
 
 			_ground = GetNode<Ground>("Ground");
 			_ground.SetController(new PhysicsGroundController(_ground));
@@ -72,7 +76,13 @@ namespace FlappyBirdRemake.Scenes
 			_restartMarker = GetNode<RestartMarker>("RestartMarker");
 			_hud = GetNode<HUD>("HUD");
 			_hud.SetGetReadyVisibility(true);
+			_audioPlayer = GetNode<AudioPlayer>("AudioPlayer");
 			ChangeRestartMarkerPosition();
+		}
+
+		private void PlayerJumped()
+		{
+			_audioPlayer.PlayFlapSound();
 		}
 
 		public override void _Input(InputEvent @event)
@@ -133,6 +143,8 @@ namespace FlappyBirdRemake.Scenes
 
 		private void OnGameOver()
 		{
+			_audioPlayer.PlayHitSound();
+			_audioPlayer.PlayDieSound();
 			GameOver = true;
 			DisablePhysicsProcess();
 			GameOverUI();
@@ -187,6 +199,7 @@ namespace FlappyBirdRemake.Scenes
 
 		private void OnPlayerHitScoreArea()
 		{
+			_audioPlayer.PlayScoreSound();
 			Score += 1;
 		}
 

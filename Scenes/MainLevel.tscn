@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b3i7mbi1yrwc1"]
+[gd_scene load_steps=12 format=3 uid="uid://b3i7mbi1yrwc1"]
 
 [ext_resource type="Script" path="res://Scenes/MainLevel.cs" id="1_as2ng"]
 [ext_resource type="PackedScene" uid="uid://qxljflohejkj" path="res://Objects/Ground.tscn" id="3_iuel1"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b0lev2473uq0h" path="res://Objects/Background.tscn" id="5_okon2"]
 [ext_resource type="PackedScene" uid="uid://bond07hoeog5h" path="res://Objects/RestartMarker.tscn" id="6_g0bcq"]
 [ext_resource type="PackedScene" uid="uid://clm568cbwg8jt" path="res://Objects/HUD.tscn" id="7_0tg3r"]
+[ext_resource type="PackedScene" uid="uid://bgp2aq1wp50s3" path="res://Objects/AudioPlayer.tscn" id="8_51m8n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s801c"]
 size = Vector2(144, 54)
@@ -66,3 +67,5 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_4ivbe")
 
 [node name="HUD" parent="." instance=ExtResource("7_0tg3r")]
+
+[node name="AudioPlayer" parent="." instance=ExtResource("8_51m8n")]

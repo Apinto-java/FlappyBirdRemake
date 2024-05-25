@@ -12,6 +12,9 @@ namespace FlappyBirdRemake.Objects
 		[Signal]
 		public delegate void PlayerHitWallEventHandler();
 
+		[Signal]
+		public delegate void PlayerJumpEventHandler();
+
 		/// <summary>
 		///	Called when the node enters the scene tree for the first time. 
 		///	Initializes all necessary variables and sets Physics Processing to false.
@@ -32,6 +35,7 @@ namespace FlappyBirdRemake.Objects
 		public void Jump(float impulse)
 		{
 			Velocity = new Vector2(Velocity.X, impulse);
+			EmitSignal(SignalName.PlayerJump);
 		}
 
 		public void SetRotation(float rotationDegrees)
