@@ -49,6 +49,7 @@ namespace FlappyBirdRemake.Scenes
 		private readonly ScoreFileManager _scoreFileManager = new();
 
 		private AudioPlayer _audioPlayer;
+		private Timer _gameOverSoundTimer;
 
 		/// <summary>
 		///	Called when the node enters the scene tree for the first time. 
@@ -77,6 +78,9 @@ namespace FlappyBirdRemake.Scenes
 			_hud = GetNode<HUD>("HUD");
 			_hud.SetGetReadyVisibility(true);
 			_audioPlayer = GetNode<AudioPlayer>("AudioPlayer");
+
+			_gameOverSoundTimer = GetNode<Timer>("GameOverSoundTimer");
+			_gameOverSoundTimer.Timeout += OnGameOverSoundTimer;
 			ChangeRestartMarkerPosition();
 		}
 
@@ -144,10 +148,15 @@ namespace FlappyBirdRemake.Scenes
 		private void OnGameOver()
 		{
 			_audioPlayer.PlayHitSound();
-			_audioPlayer.PlayDieSound();
+			_gameOverSoundTimer.Start();
 			GameOver = true;
 			DisablePhysicsProcess();
 			GameOverUI();
+		}
+
+		private void OnGameOverSoundTimer()
+		{
+			_audioPlayer.PlayDieSound();
 		}
 
 		private void GameOverUI()

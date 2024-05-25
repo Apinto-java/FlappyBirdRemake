@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://clm568cbwg8jt"]
+[gd_scene load_steps=19 format=3 uid="uid://clm568cbwg8jt"]
 
 [ext_resource type="Script" path="res://Objects/HUD.cs" id="1_8a5qh"]
 [ext_resource type="Theme" uid="uid://c7xnw3rubfs3h" path="res://Themes/main_theme.tres" id="1_is0aw"]
 [ext_resource type="Texture2D" uid="uid://do2db6fkhq67w" path="res://Art/Mobile - Flappy Bird - Version 12 Sprites.png" id="3_w64yr"]
 [ext_resource type="Texture2D" uid="uid://sxqjiywt6g3s" path="res://Art/new_best_score.tres" id="4_608m0"]
+[ext_resource type="Texture2D" uid="uid://cqifpf3b7ygvq" path="res://Art/pause_button.tres" id="5_h54eb"]
 
 [sub_resource type="Animation" id="Animation_eyi61"]
 length = 0.5
@@ -309,6 +310,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 13.0
 grow_horizontal = 2
+size_flags_horizontal = 4
 theme = ExtResource("1_is0aw")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
@@ -316,6 +318,7 @@ theme_override_font_sizes/font_size = 32
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="DeathFlash" type="ColorRect" parent="."]
 visible = false
@@ -372,9 +375,8 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -72.0
 offset_top = 112.5
-offset_right = 72.0
+offset_right = 144.0
 offset_bottom = 144.5
 grow_horizontal = 2
 size_flags_horizontal = 4
@@ -403,10 +405,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -56.5
-offset_top = -34.5
-offset_right = 56.5
-offset_bottom = 22.5
+offset_left = 15.5
+offset_top = 54.5
+offset_right = 128.5
+offset_bottom = 111.5
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_cy0ti")
@@ -467,3 +469,12 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_is0aw")
 text = "OK"
+
+[node name="Button" type="Button" parent="."]
+offset_top = 1.0
+offset_right = 21.0
+offset_bottom = 23.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("5_h54eb")
+flat = true

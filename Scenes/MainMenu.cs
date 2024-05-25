@@ -1,5 +1,6 @@
 using FlappyBirdRemake.Controllers.GroundControllers;
 using FlappyBirdRemake.Objects;
+using FlappyBirdRemake.Objects.Sound;
 using Godot;
 using System;
 
@@ -12,6 +13,9 @@ namespace FlappyBirdRemake.Scenes
 		private AnimationPlayer _titleAnimationPlayer;
 
 		private Button _startButton;
+
+		private AudioPlayer _audioPlayer;
+		private Timer _startGameTimer;
 
 		[Export(PropertyHint.File)] public string MainLevelScenePath;
 
@@ -29,11 +33,23 @@ namespace FlappyBirdRemake.Scenes
 
 			_startButton = GetNode<Button>("StartButton");
 			_startButton.Pressed += OnStartButtonPressed;
+
+			_startGameTimer = GetNode<Timer>("StartGameTimer");
+			_startGameTimer.Timeout += OnStartGameTimerTimeout;
+
+			_audioPlayer = GetNode<AudioPlayer>("AudioPlayer");
+		}
+
+		private void OnStartGameTimerTimeout()
+		{
+			
+			GetTree().ChangeSceneToFile(MainLevelScenePath);
 		}
 
 		private void OnStartButtonPressed()
 		{
-			GetTree().ChangeSceneToFile(MainLevelScenePath);
+			_audioPlayer.PlayStartSound();
+			_startGameTimer.Start();
 		}
 
 		// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -69,3 +69,7 @@ shape = SubResource("RectangleShape2D_4ivbe")
 [node name="HUD" parent="." instance=ExtResource("7_0tg3r")]
 
 [node name="AudioPlayer" parent="." instance=ExtResource("8_51m8n")]
+
+[node name="GameOverSoundTimer" type="Timer" parent="."]
+wait_time = 0.55
+one_shot = true

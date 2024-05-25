@@ -13,48 +13,41 @@ namespace FlappyBirdRemake.Objects.Sound
 
         public override void _Ready()
         {
-			Stream = new AudioStreamPolyphonic();
-            MaxPolyphony = 3;
+            MaxPolyphony = 10;
         }
 
         public void PlayFlapSound()
 		{
-
+			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
-			if(!playback._IsPlaying())
-				Play();
 			playback.PlayStream(FlapSound);
 		}
 		
 		public void PlayHitSound()
 		{
+			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
-			if(!playback._IsPlaying())
-				Play();
 			playback.PlayStream(HitSound);
 		}
 
 		public void PlayDieSound()
 		{
+			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
-			if(!playback._IsPlaying())
-				Play();
 			playback.PlayStream(DieSound);
 		}
 
 		public void PlayScoreSound()
 		{
+			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
-			if(!playback._IsPlaying())
-				Play();
 			playback.PlayStream(ScoreSound);
 		}
 
 		public void PlayStartSound()
 		{
+			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
-			if(!playback._IsPlaying())
-				Play();
 			playback.PlayStream(StartSound);
 		}
 
