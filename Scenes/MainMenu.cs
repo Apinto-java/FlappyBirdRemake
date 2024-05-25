@@ -1,6 +1,7 @@
 using FlappyBirdRemake.Controllers.GroundControllers;
 using FlappyBirdRemake.Objects;
 using FlappyBirdRemake.Objects.Sound;
+using FlappyBirdRemake.Objects.UI;
 using Godot;
 using System;
 
@@ -16,6 +17,8 @@ namespace FlappyBirdRemake.Scenes
 
 		private AudioPlayer _audioPlayer;
 		private Timer _startGameTimer;
+
+		private FadeBlackBackground _fadeToBlackBackground;
 
 		[Export(PropertyHint.File)] public string MainLevelScenePath;
 
@@ -38,6 +41,8 @@ namespace FlappyBirdRemake.Scenes
 			_startGameTimer.Timeout += OnStartGameTimerTimeout;
 
 			_audioPlayer = GetNode<AudioPlayer>("AudioPlayer");
+
+			_fadeToBlackBackground = GetNode<FadeBlackBackground>("FadeBlackBackground");
 		}
 
 		private void OnStartGameTimerTimeout()
@@ -49,6 +54,8 @@ namespace FlappyBirdRemake.Scenes
 		private void OnStartButtonPressed()
 		{
 			_audioPlayer.PlayStartSound();
+			_fadeToBlackBackground.Visible = true;
+			_fadeToBlackBackground.FadeIn();
 			_startGameTimer.Start();
 		}
 

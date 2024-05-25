@@ -26,6 +26,7 @@ namespace FlappyBirdRemake.Scenes
 		private HUD _hud;
 
 		[Export] public PackedScene PipesScene { get; set; }
+		[Export(PropertyHint.File)] public string MainMenuScenePath { get; set; }
 
 		private float _distanceBetweenPipes;
 
@@ -51,6 +52,7 @@ namespace FlappyBirdRemake.Scenes
 
 		private AudioPlayer _audioPlayer;
 		private Timer _gameOverSoundTimer;
+		private Timer _goToMenuTimer;
 
 		/// <summary>
 		///	Called when the node enters the scene tree for the first time. 
@@ -79,12 +81,19 @@ namespace FlappyBirdRemake.Scenes
 			_upperBoundaryArea.BodyEntered += OnPlayerHitUpperBoundary;
 
 			_restartMarker = GetNode<RestartMarker>("RestartMarker");
+
 			_hud = GetNode<HUD>("HUD");
 			_hud.SetGetReadyVisibility(true);
+			_hud.OkButtonPressed += OnOkButtonPressed;
+			
 			_audioPlayer = GetNode<AudioPlayer>("AudioPlayer");
 
-			_gameOverSoundTimer = GetNode<Timer>("GameOverSoundTimer");
+			_gameOverSoundTimer = GetNode<Timer>("Timers/GameOverSoundTimer");
 			_gameOverSoundTimer.Timeout += OnGameOverSoundTimer;
+
+			_goToMenuTimer = GetNode<Timer>("Timers/GoToMenuTimer");
+			_goToMenuTimer.Timeout += OnGoToMenuTimeout;
+
 			ChangeRestartMarkerPosition();
 		}
 
@@ -95,11 +104,6 @@ namespace FlappyBirdRemake.Scenes
 
 		public override void _Input(InputEvent @event)
 		{
-
-			if(@event.IsActionPressed("restart"))
-			{
-				ReloadScene();
-			}
 
 			if(@event.IsActionPressed("jump") && !_gameHasStarted)
 			{
@@ -112,20 +116,6 @@ namespace FlappyBirdRemake.Scenes
 
 			// Dispose of the event once it has been used
 			@event.Dispose();
-		}
-
-		private void ReloadScene()
-		{
-			_groundArea.BodyEntered -= PlayerTouchedGround;
-			_restartArea.BodyEntered -= OnRestartMarkerHit;
-			var nodeChildren = this.GetChildren();
-			foreach(var child in nodeChildren)
-			{
-				child.QueueFree();
-				child.Dispose();
-			}
-			
-			GetTree().ReloadCurrentScene();
 		}
 
 		/// <summary>
@@ -171,6 +161,11 @@ namespace FlappyBirdRemake.Scenes
 			_audioPlayer.PlayDieSound();
 		}
 
+		private void OnGoToMenuTimeout()
+		{
+			GetTree().ChangeSceneToFile(MainMenuScenePath);
+		}
+
 		private void GameOverUI()
 		{
 			int maxScore =_scoreFileManager.Load();
@@ -180,6 +175,13 @@ namespace FlappyBirdRemake.Scenes
 				maxScore = Score;
 			}
 			_hud.ShowGameOverMessage(Score, maxScore);
+		}
+
+		private void OnOkButtonPressed()
+		{
+			_audioPlayer.PlayStartSound();
+			_goToMenuTimer.Start();
+			_hud.FadeIn();
 		}
 
 		/// <summary>

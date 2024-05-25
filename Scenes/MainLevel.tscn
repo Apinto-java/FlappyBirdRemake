@@ -24,6 +24,7 @@ normal = Vector2(0, 1)
 [node name="MainLevel" type="Node2D"]
 script = ExtResource("1_as2ng")
 PipesScene = ExtResource("4_uf3c8")
+MainMenuScenePath = "res://Scenes/MainMenu.tscn"
 
 [node name="Ground" parent="." instance=ExtResource("3_iuel1")]
 layer = 1
@@ -80,6 +81,11 @@ shape = SubResource("WorldBoundaryShape2D_i0pg4")
 
 [node name="AudioPlayer" parent="." instance=ExtResource("8_51m8n")]
 
-[node name="GameOverSoundTimer" type="Timer" parent="."]
+[node name="Timers" type="Node" parent="."]
+
+[node name="GameOverSoundTimer" type="Timer" parent="Timers"]
 wait_time = 0.55
+one_shot = true
+
+[node name="GoToMenuTimer" type="Timer" parent="Timers"]
 one_shot = true

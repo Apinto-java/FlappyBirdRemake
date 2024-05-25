@@ -24,11 +24,17 @@ namespace FlappyBirdRemake.Objects.UI
 		private Dictionary<int, string> _medalTextures = new();
 
 		private Button _gameOverOkButton;
-		[Export(PropertyHint.File)] public string MainMenuScenePath;
+
+		[Signal] public delegate void OkButtonPressedEventHandler();
+
+		private FadeBlackBackground _fadeToBlackBackground;
 
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
+			_fadeToBlackBackground = GetNode<FadeBlackBackground>("FadeToBlackBackground");
+			_fadeToBlackBackground.FadeOut();
+
 			_scoreLabel = GetNode<Label>("ScoreLabel");
 			_gameOverLabel = GetNode<Label>("GameOverContainer/GameOverLabel");
 			_gameOverScoreLabel = GetNode<Label>("GameOverContainer/GameOverScore/CurrentScoreLabel");
@@ -52,9 +58,7 @@ namespace FlappyBirdRemake.Objects.UI
 
 		private void OnOkButtonPressed()
 		{
-			var mainMenuScenePath = "res://Scenes/MainMenu.tscn";
-
-			GetTree().ChangeSceneToFile(mainMenuScenePath);
+			EmitSignal(SignalName.OkButtonPressed);
 		}
 
 		private void InitializeMedalTextures()
@@ -88,6 +92,11 @@ namespace FlappyBirdRemake.Objects.UI
 			PlayDeathAnimation();
 		}
 
+		public void FadeIn()
+		{
+			_fadeToBlackBackground.FadeIn();
+		}
+
 		private void PlayGameOverAnimation()
 		{
 			_gameOverAnimationPlayer.Play("game_over_animation");
@@ -98,7 +107,7 @@ namespace FlappyBirdRemake.Objects.UI
 			_gameOverScoreLabel.Text = score.ToString();
 			_gameOverBestScoreLabel.Text = bestScore.ToString();
 
-			var medalImagePath = _medalTextures.Last(x => bestScore >= x.Key).Value;
+			var medalImagePath = _medalTextures.Last(x => score >= x.Key).Value;
 
 			if(medalImagePath != null)
 				_medalImage.Texture = GD.Load<AtlasTexture>(medalImagePath);
