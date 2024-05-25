@@ -18,41 +18,37 @@ namespace FlappyBirdRemake.Objects.Sound
 
         public void PlayFlapSound()
 		{
-			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
 			playback.PlayStream(FlapSound);
 		}
 		
 		public void PlayHitSound()
 		{
-			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
 			playback.PlayStream(HitSound);
 		}
 
 		public void PlayDieSound()
 		{
-			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
 			playback.PlayStream(DieSound);
 		}
 
 		public void PlayScoreSound()
 		{
-			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
 			playback.PlayStream(ScoreSound);
 		}
 
 		public void PlayStartSound()
 		{
-			if(!Playing) Play();
 			var playback = GetAudioStreamPlaybackPolyphonic();
 			playback.PlayStream(StartSound);
 		}
 
 		private AudioStreamPlaybackPolyphonic GetAudioStreamPlaybackPolyphonic()
 		{
+			if(!Playing) Play();
 			return (AudioStreamPlaybackPolyphonic)GetStreamPlayback();
 		}
 

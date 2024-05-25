@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3i7mbi1yrwc1"]
+[gd_scene load_steps=13 format=3 uid="uid://b3i7mbi1yrwc1"]
 
 [ext_resource type="Script" path="res://Scenes/MainLevel.cs" id="1_as2ng"]
 [ext_resource type="PackedScene" uid="uid://qxljflohejkj" path="res://Objects/Ground.tscn" id="3_iuel1"]
@@ -17,6 +17,9 @@ size = Vector2(1, 256)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ivbe"]
 size = Vector2(144, 54)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_i0pg4"]
+normal = Vector2(0, 1)
 
 [node name="MainLevel" type="Node2D"]
 script = ExtResource("1_as2ng")
@@ -65,6 +68,13 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/GroundArea"]
 shape = SubResource("RectangleShape2D_4ivbe")
+
+[node name="UpperBoundaryArea" type="Area2D" parent="Areas"]
+position = Vector2(0, -20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/UpperBoundaryArea"]
+position = Vector2(72, 0)
+shape = SubResource("WorldBoundaryShape2D_i0pg4")
 
 [node name="HUD" parent="." instance=ExtResource("7_0tg3r")]
 

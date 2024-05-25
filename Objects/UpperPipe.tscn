@@ -16,6 +16,8 @@ metadata/_edit_horizontal_guides_ = [68.0]
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_0qb70")
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_biuwe")
+metadata/_edit_lock_ = true

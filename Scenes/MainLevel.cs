@@ -21,6 +21,7 @@ namespace FlappyBirdRemake.Scenes
 		private RestartMarker _restartMarker { get; set; }
 		private Area2D _restartArea { get; set; }
 		private Area2D _groundArea;
+		private Area2D _upperBoundaryArea;
 		private Marker2D _restartMarkerPosition;
 		private HUD _hud;
 
@@ -62,7 +63,7 @@ namespace FlappyBirdRemake.Scenes
 			Score = 0;
 
 			_player = GetNode<Player>("Player");
-			_player.PlayerHitWall += () => PlayerHitWall();
+			_player.PlayerHitWall += PlayerHitWall;
 			_player.PlayerJump += PlayerJumped;
 
 			_ground = GetNode<Ground>("Ground");
@@ -73,6 +74,9 @@ namespace FlappyBirdRemake.Scenes
 			_restartMarkerPosition = GetNode<Marker2D>("RestartMarkerPosition");
 			_restartArea = GetNode<Area2D>("Areas/RestartArea");
 			_restartArea.BodyEntered += OnRestartMarkerHit;
+
+			_upperBoundaryArea = GetNode<Area2D>("Areas/UpperBoundaryArea");
+			_upperBoundaryArea.BodyEntered += OnPlayerHitUpperBoundary;
 
 			_restartMarker = GetNode<RestartMarker>("RestartMarker");
 			_hud = GetNode<HUD>("HUD");
@@ -142,6 +146,14 @@ namespace FlappyBirdRemake.Scenes
 		/// </summary>
 		private void PlayerHitWall()
 		{
+			OnGameOver();
+		}
+
+		private void OnPlayerHitUpperBoundary(Node2D body)
+		{
+			if(body is not Player)
+				return;
+
 			OnGameOver();
 		}
 
