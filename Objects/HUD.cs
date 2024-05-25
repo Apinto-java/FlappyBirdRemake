@@ -24,8 +24,12 @@ namespace FlappyBirdRemake.Objects.UI
 		private Dictionary<int, string> _medalTextures = new();
 
 		private Button _gameOverOkButton;
+		private Button _pauseAndPlayButton;
 
 		[Signal] public delegate void OkButtonPressedEventHandler();
+
+		[Export] public AtlasTexture PauseButtonTexture { get; set; }
+		[Export] public AtlasTexture PlayButtonTexture { get; set; }
 
 		private FadeBlackBackground _fadeToBlackBackground;
 
@@ -51,14 +55,14 @@ namespace FlappyBirdRemake.Objects.UI
 			_gameOverOkButton = GetNode<Button>("GameOverContainer/GameOverOkButton");
 			_gameOverOkButton.Pressed += OnOkButtonPressed;
 
+			_pauseAndPlayButton = GetNode<Button>("PauseAndPlayButton");
+			_pauseAndPlayButton.Pressed += OnPauseAndPlayButtonPressed;
+			_pauseAndPlayButton.Visible = false;
+			_pauseAndPlayButton.Icon = GetPauseAndPlayButtonTexture();
+
 			InitializeMedalTextures();
 			_gameOverContainer.Visible = false;
 			_newBestScoreImage.Visible = false;
-		}
-
-		private void OnOkButtonPressed()
-		{
-			EmitSignal(SignalName.OkButtonPressed);
 		}
 
 		private void InitializeMedalTextures()
@@ -70,12 +74,33 @@ namespace FlappyBirdRemake.Objects.UI
 			_medalTextures.Add(40, "res://Art/platinum_medal.tres");
 		}
 
+		private void OnOkButtonPressed()
+		{
+			EmitSignal(SignalName.OkButtonPressed);
+		}
+		
+		private void OnPauseAndPlayButtonPressed()
+		{
+			GetTree().Paused = !GetTree().Paused;
+			_pauseAndPlayButton.Icon = GetPauseAndPlayButtonTexture();
+		}
+
+		private AtlasTexture GetPauseAndPlayButtonTexture()
+		{
+			if(GetTree().Paused)
+				return PlayButtonTexture;
+			return PauseButtonTexture;
+		}
+
 		public void SetGetReadyVisibility(bool visible)
 		{
 			_getReadyContainer.Visible = visible;
 
 			if(!visible)
+			{
 				_getReadyAnimationPlayer.Play("fade_out");
+				_pauseAndPlayButton.Visible = true;
+			}
 		}
 
 		public void SetScore(int score)
@@ -85,6 +110,9 @@ namespace FlappyBirdRemake.Objects.UI
 
 		public void ShowGameOverMessage(int score, int bestScore)
 		{
+			_pauseAndPlayButton.Visible = false;
+			_pauseAndPlayButton.Disabled = true;
+
 			_gameOverContainer.Visible = true;
 			PlayGameOverAnimation();
 			SetGameOverScore(score, bestScore);

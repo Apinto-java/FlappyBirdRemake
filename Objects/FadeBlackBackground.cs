@@ -23,5 +23,10 @@ namespace FlappyBirdRemake.Objects.UI
 			_animationPlayer.Play("fade_out");
 		}
 
-	}
+
+        public override void _ExitTree()
+        {
+            Dispose();
+        }
+    }
 }

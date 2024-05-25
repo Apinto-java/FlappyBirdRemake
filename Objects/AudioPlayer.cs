@@ -52,5 +52,10 @@ namespace FlappyBirdRemake.Objects.Sound
 			return (AudioStreamPlaybackPolyphonic)GetStreamPlayback();
 		}
 
-	}
+        public override void _ExitTree()
+        {
+            Dispose();
+        }
+
+    }
 }
